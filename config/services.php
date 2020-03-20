@@ -30,4 +30,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'climbing_equipment' => [
+        'base_uri'  =>  env('CLIMBING_EQUIPMENTS_SERVICE_BASE_URL'),
+        'secret'  =>  env('CLIMBING_EQUIPMENTS_SERVICE_SECRET'),
+    ],
 ];
