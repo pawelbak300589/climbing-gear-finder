@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Traits\ConsumeExternalService;
 
-class ClimbingEquipmentService
+class GearsService
 {
     use ConsumeExternalService;
 
