@@ -23,9 +23,9 @@ Vue.component('brands', require('./components/Brands.vue').default);
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faPlus, faMinus, faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faMinus, faTimes, faTimesCircle, faPencilAlt, faTrashAlt, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faPlus, faMinus, faPencilAlt, faTrashAlt);
+library.add(faPlus, faMinus, faTimes, faTimesCircle, faPencilAlt, faTrashAlt, faExchangeAlt);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 /**

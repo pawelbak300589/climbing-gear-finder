@@ -4,32 +4,36 @@
             <div class="card-header">
                 {{ brand.name }}
                 <div class="float-right">
-                    <font-awesome-icon icon="pencil-alt" class="ml-3"/>
-                    <font-awesome-icon icon="trash-alt" class="ml-3"/>
+                    <a href="#" class="btn btn-sm btn-light ml-3" title="Edit">
+                        <font-awesome-icon icon="pencil-alt" class=""/>
+                    </a>
+                    <a href="#" class="btn btn-sm btn-light ml-3" title="Mark as duplication" data-toggle="modal"
+                       data-target="#brandDuplicationModal">
+                        <font-awesome-icon icon="exchange-alt" class=""/>
+                    </a>
+                    <a href="#" class="btn btn-sm btn-light ml-3" title="Move to blacklist">
+                        <font-awesome-icon icon="times-circle" class=""/>
+                    </a>
+                    <a href="#" class="btn btn-sm btn-light ml-3" title="Remove">
+                        <font-awesome-icon icon="trash-alt" class=""/>
+                    </a>
                 </div>
             </div>
 
             <div class="card-body">
-                <ul class="list-unstyled">
-                    <li class="badge badge-info mr-2" v-for="name_mapping in brand.name_mappings">
-                        {{ name_mapping.name }}
-
-                    </li>
-                    <li>
-                        <div class="form-group">
-                            <label for="nameMapping">Add new name mapping:</label>
-                            <input type="text" class="form-control" name="nameMapping" id="nameMapping"
-                                   placeholder="New Name Mapping">
-                        </div>
-                    </li>
-                </ul>
+                <brand-name-mappings :name_mappings="brand.name_mappings"></brand-name-mappings>
             </div>
         </div>
+        <duplicated-brands-modal :brands="brands"></duplicated-brands-modal>
     </div>
 </template>
 
 <script>
+    import BrandNameMappings from "./BrandNameMappings";
+    import DuplicatedBrandsModal from "./DuplicatedBrandsModal";
+
     export default {
+        components: {BrandNameMappings, DuplicatedBrandsModal},
         props: ['brands'],
         data() {
             return {}
