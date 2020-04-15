@@ -1,0 +1,6 @@
+#!/bin/bash
+
+args="$@"
+command="php artisan $args"
+echo "$command"
+docker exec -it climbing-gear-scraper bash -c "sudo \"$command\""
