@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function ()
+{
     return view('welcome');
 });
 
@@ -21,7 +22,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'admin'], function ()
+Route::group(['middleware' => 'auth'], function ()
 {
-    Route::get('/brands', 'Admin\BrandsController@index');
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 });

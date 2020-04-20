@@ -3,4 +3,4 @@
 args="$@"
 command="php artisan $args"
 echo "$command"
-docker exec -it climbing-gear-scraper bash -c "sudo \"$command\""
+docker exec -it climbing-gear-finder bash -c "sudo \"$command\""
