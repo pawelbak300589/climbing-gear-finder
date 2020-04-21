@@ -16,15 +16,42 @@ class RolesTableSeeder extends Seeder
         app()['cache']->forget('spatie.permission.cache');
 
         $roles = [
-            'SuperAdmin',
-            'Admin',
-            'NormalUser',
-            'PremiumUser',
+            'SuperAdmin' => [
+                // has granted all permissions in AuthServiceProvider line 31-33
+            ],
+            'Admin' => [
+                'role-list',
+                'role-create',
+                'role-edit',
+                'role-delete',
+                'permission-list',
+                'permission-create',
+                'permission-edit',
+                'permission-delete',
+                'user-list',
+                'user-create',
+                'user-edit',
+                'user-delete',
+                'brand-list',
+                'brand-create',
+                'brand-edit',
+                'brand-delete',
+                'gear-list',
+                'gear-create',
+                'gear-edit',
+                'gear-delete'
+            ],
+            'NormalUser' => [],
+            'PremiumUser' => [],
         ];
 
-        foreach ($roles as $role)
+        foreach ($roles as $roleName => $permissions)
         {
-            Role::create(['name' => $role]);
+            $role = Role::create(['name' => $roleName]);
+            foreach ($permissions as $permission)
+            {
+                $role->givePermissionTo($permission);
+            }
         }
     }
 }

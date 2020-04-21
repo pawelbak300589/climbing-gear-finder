@@ -6,10 +6,9 @@ use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Spatie\Permission\Contracts\Role;
-use Spatie\Permission\Contracts\Permission;
 use Tests\TestCase;
 
-class AdminAccessTest extends TestCase
+class AdminUsersTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -24,67 +23,64 @@ class AdminAccessTest extends TestCase
     }
 
     /** @test */
-    public function user_must_login_to_access_admin_dashboard()
+    public function superadmin_can_access_users_list_page()
     {
-        $this->get(route('admin.dashboard'))
-            ->assertRedirect('login');
-    }
-
-    /** @test */
-    public function superadmin_can_access_to_admin_dashboard()
-    {
+        $this->withoutExceptionHandling();
         //Having
         $superAdminUser = factory(User::class)->create();
         $superAdminUser->assignRole('SuperAdmin');
         $this->actingAs($superAdminUser);
 
         //When
-        $response = $this->get(route('admin.dashboard'));
+        $response = $this->get(route('admin.users'));
 
         //Then
         $response->assertOk();
     }
 
     /** @test */
-    public function admin_can_access_to_admin_dashboard()
+    public function admin_can_access_users_list_page()
     {
+        $this->withoutExceptionHandling();
         //Having
         $adminUser = factory(User::class)->create();
         $adminUser->assignRole('Admin');
         $this->actingAs($adminUser);
 
         //When
-        $response = $this->get(route('admin.dashboard'));
+        $response = $this->get(route('admin.users'));
 
         //Then
         $response->assertOk();
     }
 
     /** @test */
-    public function superadmin_can_access_to_home()
+    public function superadmin_can_access_users_create_page()
     {
+        $this->withoutExceptionHandling();
         //Having
         $superAdminUser = factory(User::class)->create();
         $superAdminUser->assignRole('SuperAdmin');
         $this->actingAs($superAdminUser);
 
         //When
-        $response = $this->get(route('home'));
+        $response = $this->get(route('admin.users.create'));
 
         //Then
         $response->assertOk();
     }
 
     /** @test */
-    public function admin_can_access_to_home()
+    public function admin_can_access_users_create_page()
     {
+        $this->withoutExceptionHandling();
         //Having
         $adminUser = factory(User::class)->create();
         $adminUser->assignRole('Admin');
         $this->actingAs($adminUser);
 
         //When
-        $response = $this->get(route('home'));
+        $response = $this->get(route('admin.users.create'));
 
         //Then
         $response->assertOk();
