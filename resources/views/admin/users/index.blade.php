@@ -18,7 +18,7 @@
                         <th></th>
                     <tr>
                     @foreach($users as $user)
-                        <tr>
+                        <tr class="{{ $user->getTableClass() }}">
                             <td>{{ $user->name }}</td>
                             <td>
                                 @foreach($user->getRoleNames() as $role)
@@ -30,8 +30,14 @@
                             <td>{{ $user->created_at }}</td>
                             <td>{{ $user->updated_at }}</td>
                             <td>
-                                <a href="#" class="btn btn-danger float-right ml-2">Remove</a>
-                                <a href="#" class="btn btn-primary float-right ml-2">Edit</a>
+                                @if ($user->id === auth()->user()->id)
+                                    <span class="btn btn-secondary float-right ml-2 active" style="cursor: no-drop;">Remove</span>
+                                @else
+                                    {{-- TODO: do some popup for accepting delete of user etc. --}}
+                                    <a href="{{ $user->adminPath() . '/destroy' }}" class="btn btn-danger float-right ml-2">Remove</a>
+                                @endif
+                                <a href="{{ $user->adminPath() . '/edit' }}" class="btn btn-primary float-right ml-2">Edit</a>
+                                <a href="{{ $user->adminPath() }}" class="btn btn-light float-right ml-2">View Details</a>
                             </td>
                         </tr>
                     @endforeach

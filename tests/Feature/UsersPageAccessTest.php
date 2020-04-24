@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Spatie\Permission\Contracts\Role;
 use Tests\TestCase;
 
-class AdminUsersTest extends TestCase
+class UsersPageAccessTest extends TestCase
 {
     use RefreshDatabase;
 

@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreNewUser;
+use App\Http\Requests\Admin\UpdateUser;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
@@ -44,56 +48,74 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param StoreNewUser $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(StoreNewUser $request)
+    { // TODO: test permissions
+        $validated = $request->validated();
+        $validated['password'] = Hash::make('password'); // TODO: create default password and send it to user with text about changing this password at first login - maybe force to reset password at first login too...
+
+        User::create($validated)->assignRole($request->role);
+
+        return redirect('admin/users');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \App\User $user
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
     {
-        //
+        $roles = Role::all();
+
+        return view('admin.users.show', compact(['roles', 'user']));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\User $user
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
     {
-        //
+        $roles = Role::all();
+
+        return view('admin.users.edit', compact(['roles', 'user']));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\User $user
-     * @return \Illuminate\Http\Response
+     * @param UpdateUser $request
+     * @param User $user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUser $request, User $user)
     {
-        //
+        $validated = $request->validated();
+
+        $user->update($validated);
+
+        $user->updateRole($request->role);
+
+        return redirect('admin/users');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\User $user
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy(User $user)
     {
-        //
+        // TODO:
+        $user->delete();
+
+        return redirect('admin/users');
     }
 }
