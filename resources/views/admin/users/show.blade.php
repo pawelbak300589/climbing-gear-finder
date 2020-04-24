@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">
                         {{ __('User') }}: {{ $user->name }}
-                        <a href="{{ route('admin.users') }}" class="text-danger float-right">Go back</a>
+                        <a href="{{ route('admin.users.index') }}" class="text-danger float-right">Go back</a>
                     </div>
 
                     <div class="card-body">

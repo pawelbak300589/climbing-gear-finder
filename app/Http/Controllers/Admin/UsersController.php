@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreNewUser;
 use App\Http\Requests\Admin\UpdateUser;
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller

@@ -15,7 +15,9 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.brands') }}">{{ __('Brands') }}</a>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -31,6 +33,18 @@
                             </li>
                         @endif
                     @else
+                        <li class="nav-item dropdown">
+                            <a id="adminDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->getRoleNames()[0] }}&nbsp;Tools <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="adminDropdown">
+                                <a class="dropdown-item" href="{{ route('admin.users.index') }}">{{ __('Users') }}</a>
+                                <a class="dropdown-item" href="{{ route('admin.roles.index') }}">{{ __('Roles') }}</a>
+                                <a class="dropdown-item" href="{{ route('admin.roles.index') }}">{{ __('Permissions') }}</a>
+                            </div>
+                        </li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

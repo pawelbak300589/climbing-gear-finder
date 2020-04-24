@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">
                         {{ __('Edit User') }}
-                        <a href="{{ route('admin.users') }}" class="text-danger float-right">Cancel</a>
+                        <a href="{{ route('admin.users.index') }}" class="text-danger float-right">Cancel</a>
                     </div>
 
                     <div class="card-body">

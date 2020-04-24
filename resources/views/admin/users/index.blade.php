@@ -31,13 +31,19 @@
                             <td>{{ $user->updated_at }}</td>
                             <td>
                                 @if ($user->id === auth()->user()->id)
-                                    <span class="btn btn-secondary float-right ml-2 active" style="cursor: no-drop;">Remove</span>
+                                    <span class="btn btn-secondary btn-sm float-right ml-2 active" style="cursor: no-drop;">Remove</span>
                                 @else
                                     {{-- TODO: do some popup for accepting delete of user etc. --}}
-                                    <a href="{{ $user->adminPath() . '/destroy' }}" class="btn btn-danger float-right ml-2">Remove</a>
+                                    <form method="POST" action="{{ $user->adminPath() }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm float-right ml-2">Remove</button>
+                                    </form>
                                 @endif
-                                <a href="{{ $user->adminPath() . '/edit' }}" class="btn btn-primary float-right ml-2">Edit</a>
-                                <a href="{{ $user->adminPath() }}" class="btn btn-light float-right ml-2">View Details</a>
+                                <a href="{{ $user->adminPath() . '/edit' }}" class="btn btn-primary btn-sm float-right ml-2">Edit</a>
+                                <a href="{{ $user->adminPath() }}" class="btn btn-light btn-sm float-right ml-2">
+                                    View Details
+                                </a>
                             </td>
                         </tr>
                     @endforeach

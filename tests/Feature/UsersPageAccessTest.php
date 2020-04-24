@@ -32,7 +32,7 @@ class UsersPageAccessTest extends TestCase
         $this->actingAs($superAdminUser);
 
         //When
-        $response = $this->get(route('admin.users'));
+        $response = $this->get(route('admin.users.index'));
 
         //Then
         $response->assertOk();
@@ -48,7 +48,7 @@ class UsersPageAccessTest extends TestCase
         $this->actingAs($adminUser);
 
         //When
-        $response = $this->get(route('admin.users'));
+        $response = $this->get(route('admin.users.index'));
 
         //Then
         $response->assertOk();
