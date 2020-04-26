@@ -54,7 +54,7 @@
                                 <div class="col-md-8 offset-md-4">
                                     <small id="permissionsHelpBlock" class="form-text text-muted">
                                         If you want a new permission you will need to add it first <a
-                                            href="{{ route('admin.dashboard') }}">here</a>
+                                            href="{{ route('admin.permissions.create') }}">here</a>
                                     </small>
                                 </div>
                             </div>
