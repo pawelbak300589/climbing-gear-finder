@@ -96,9 +96,10 @@ class UsersController extends Controller
     {
         $validated = $request->validated();
 
+        // Update user
         $user->update($validated);
-
-        $user->updateRole($request->role);
+        // Reset roles for updated user
+        $user->syncRoles($request->role);
 
         return redirect('admin/users');
     }

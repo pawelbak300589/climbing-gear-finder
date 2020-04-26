@@ -54,19 +54,6 @@ class User extends Authenticatable
         return $this->getRoleNames();
     }
 
-    public function updateRole($roleId)
-    {
-        foreach (Role::all() as $role)
-        {
-            $this->removeRole($role);
-        }
-
-        $role = Role::where('id', '=', $roleId)->firstOrFail();
-        $this->assignRole($role);
-
-        return $this->getRoleNames();
-    }
-
     public function getTableClass()
     {
         if ($this->id === auth()->user()->id)
