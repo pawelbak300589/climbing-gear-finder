@@ -10,33 +10,49 @@
                 <table class="table table-hover">
                     <tr>
                         <th>Name</th>
+                        <th>Number of Permissions</th>
                         <th>Number of Users</th>
                         <th>Created</th>
                         <th>Last Update</th>
                         <th></th>
                     <tr>
                     @foreach($roles as $role)
-                        <tr>
+                        <tr class="{{ $role->name === 'Guest' ? 'table-danger' : '' }}">
                             <td>{{ $role->name }}</td>
+                            <td>
+                                @if ($role->name !== 'SuperAdmin')
+                                    <span class="badge badge-primary"
+                                          data-toggle="tooltip" data-html="true"
+                                          title="{{ $permissions[$role->id] }}">
+                                        {{ $role->permissions->count() }}
+                                    </span>
+                                @else
+                                    <span class="badge badge-primary">All permissions granted</span>
+                                @endif
+                            </td>
                             <td><span class="badge badge-primary">{{ $role->users->count() }}</span></td>
                             <td>{{ $role->created_at }}</td>
                             <td>{{ $role->updated_at }}</td>
                             <td>
                                 @if ($role->name !== 'SuperAdmin')
-                                    <span class="btn btn-secondary btn-sm float-right ml-2 active"
-                                          style="cursor: no-drop;">Remove</span>
                                     {{-- TODO: do some popup for accepting delete of user etc. --}}
-                                    <form method="POST" action="admin/roles/{{ $role->id }}">
+                                    <form method="POST" action="/admin/roles/{{ $role->id }}">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm float-right ml-2">Remove
+                                        <button type="submit" class="btn btn-danger btn-sm float-right ml-2">
+                                            Remove
                                         </button>
                                     </form>
-                                    <a href="admin/roles/{{ $role->id }}/edit"
-                                       class="btn btn-primary btn-sm float-right ml-2">Edit</a>
-                                    <a href="admin/roles/{{ $role->id }}" class="btn btn-light btn-sm float-right ml-2">
+                                    <a href="/admin/roles/{{ $role->id }}/edit"
+                                       class="btn btn-primary btn-sm float-right ml-2">
+                                        Edit
+                                    </a>
+                                    <a href="/admin/roles/{{ $role->id }}"
+                                       class="btn btn-light btn-sm float-right ml-2">
                                         View Details
                                     </a>
+                                @else
+                                    <span class="text-danger float-right">SuperAdmin role is unmodifiable</span>
                                 @endif
                             </td>
                         </tr>
@@ -45,4 +61,9 @@
             </div>
         </div>
     </div>
+    <script type="application/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 @endsection

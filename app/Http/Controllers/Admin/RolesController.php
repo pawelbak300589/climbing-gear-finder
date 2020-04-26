@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreNewRole;
-use App\Http\Requests\UpdateRole;
+use App\Http\Requests\Admin\StoreNewRole;
+use App\Http\Requests\Admin\UpdateRole;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RolesController extends Controller
@@ -25,8 +26,27 @@ class RolesController extends Controller
     public function index()
     {
         $roles = Role::all();
+        $permissions = [];
 
-        return view('admin.roles.index', compact('roles'));
+        foreach ($roles as $role)
+        {
+            if ($role->permissions()->count())
+            {
+                $permissions[$role->id] = 'Granted permissions to:<br>';
+                $permissions[$role->id] .= '<ul>';
+                foreach ($role->permissions()->get() as $permission)
+                {
+                    $permissions[$role->id] .= '<li class="text-left">' . $permission->name . '</li>';
+                }
+                $permissions[$role->id] .= '</ul>';
+            }
+            else
+            {
+                $permissions[$role->id] = 'No permissions granted';
+            }
+        }
+
+        return view('admin.roles.index', compact(['roles', 'permissions']));
     }
 
     /**
@@ -36,7 +56,9 @@ class RolesController extends Controller
      */
     public function create()
     {
-        return view('admin.roles.create');
+        $permissions = Permission::all();
+
+        return view('admin.roles.create', compact('permissions'));
     }
 
     /**
@@ -48,11 +70,19 @@ class RolesController extends Controller
     public function store(StoreNewRole $request)
     { // TODO: test permissions
         $validated = $request->validated();
+        $permissions = $validated['permissions'] ?? [];
+        unset($validated['permissions']);
 
+        // Create new role
         $role = Role::create($validated);
-        foreach ($request->permissions as $permission)
+
+        // Assign permissions for new role if there are some in request
+        if ($permissions)
         {
-            $role->givePermissionTo($permission);
+            foreach ($permissions as $permission)
+            {
+                $role->givePermissionTo($permission);
+            }
         }
 
         return redirect('admin/roles');
@@ -77,7 +107,9 @@ class RolesController extends Controller
      */
     public function edit(Role $role)
     {
-        return view('admin.roles.edit', compact('role'));
+        $permissions = Permission::all();
+
+        return view('admin.roles.edit', compact(['role', 'permissions']));
     }
 
     /**
@@ -90,8 +122,22 @@ class RolesController extends Controller
     public function update(UpdateRole $request, Role $role)
     {
         $validated = $request->validated();
+        $permissions = $validated['permissions'] ?? [];
+        unset($validated['permissions']);
 
+        // Update role
         $role->update($validated);
+        // revoke all permissions for updated role
+        $role->syncPermissions();
+
+        // Assign new permissions if there are some in request
+        if ($permissions)
+        {
+            foreach ($permissions as $permission)
+            {
+                $role->givePermissionTo($permission);
+            }
+        }
 
         return redirect('admin/roles');
     }
@@ -105,6 +151,13 @@ class RolesController extends Controller
     public function destroy(Role $role)
     {
         // delete role
+//        TODO: what will happen with all users after removing role
+        foreach ($role->users()->get() as $user)
+        {
+            $user->assignRole(Role::findOrCreate('Guest'));
+        }
+
+        $role->delete();
 
         return redirect('admin/roles');
     }

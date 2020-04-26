@@ -111,7 +111,7 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        // TODO:
+        // TODO: ask if you are sure ou want to remove this user
         $user->delete();
 
         return redirect('admin/users');

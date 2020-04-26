@@ -6,22 +6,24 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
-                        {{ __('Edit User') }}
-                        <a href="{{ route('admin.users.index') }}" class="text-danger float-right">Cancel</a>
+                        {{ __('Edit Role') }}
+                        <a href="{{ route('admin.roles.index') }}" class="text-danger float-right">Cancel</a>
                     </div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ $user->adminPath() }}">
+                        <form method="POST" action="/admin/roles/{{ $role->id }}">
                             @csrf
                             @method('PATCH')
 
                             <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                                <label for="name" class="col-md-4 col-form-label text-md-right">
+                                    {{ __('Name') }}
+                                </label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text"
                                            class="form-control @error('name') is-invalid @enderror" name="name"
-                                           value="{{ old('name', $user->name) }}" required autocomplete="name"
+                                           value="{{ old('name', $role->name) }}" required autocomplete="name"
                                            autofocus>
 
                                     @error('name')
@@ -33,51 +35,40 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="email"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="email" type="email"
-                                           class="form-control @error('email') is-invalid @enderror" name="email"
-                                           value="{{ old('email', $user->email) }}" required autocomplete="email">
-
-                                    @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                {{-- TODO: add javascript to 'select/unselect all' checkbox --}}
+                                <div class="col-md-4">
+                                    <input class="form-check-input position-static float-right" type="checkbox"
+                                           value="" id="selectAllPermission">
                                 </div>
-                            </div>
 
-                            <div class="form-group row">
-                                <label for="role" class="col-md-4 col-form-label text-md-right">
-                                    {{ __('Role') }}
+                                <label class="form-check-label text-danger col-md-8" for="selectAllPermission">
+                                    Select all permissions (equivalent of SuperAdmin)
                                 </label>
+                                @foreach($permissions as $permission)
+                                    <div class="col-md-4">
+                                        <input class="form-check-input position-static float-right"
+                                               name="permissions[]"
+                                               type="checkbox"
+                                               value="{{ $permission->id }}" id="permission{{ $permission->id }}"
+                                            {{ $role->hasPermissionTo($permission->id) ? ' checked' : '' }}>
+                                    </div>
 
-                                <div class="col-md-6">
-                                    <select id="role" type="role" name="role"
-                                            class="form-control @error('role') is-invalid @enderror" required>
-                                        @foreach($roles as $role)
-                                            <option
-                                                value="{{ $role->id }}"
-                                                {{ $user->hasRole($role->name) ? 'selected' : '' }}>
-                                                {{ $role->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('role')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                    <label class="form-check-label col-md-6" for="permission{{ $permission->id }}">
+                                        {{ $permission->name }}
+                                    </label>
+                                @endforeach
+                                <div class="col-md-8 offset-md-4">
+                                    <small id="permissionsHelpBlock" class="form-text text-muted">
+                                        If you want a new permission you will need to add it first
+                                        <a href="{{ route('admin.dashboard') }}">here</a>
+                                    </small>
                                 </div>
                             </div>
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-success">
-                                        {{ __('Create User') }}
+                                        {{ __('Update Role') }}
                                     </button>
                                 </div>
                             </div>
