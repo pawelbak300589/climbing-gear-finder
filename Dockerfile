@@ -10,6 +10,8 @@ RUN apt-get install -y \
     curl \
     sudo \
     unzip \
+    nodejs \
+    npm \
     libicu-dev \
     libbz2-dev \
     libpng-dev \

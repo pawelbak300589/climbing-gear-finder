@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker exec -it climbing-gear-scraper bash
+docker exec -it climbing-gear-finder bash
 
