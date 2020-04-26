@@ -32,13 +32,13 @@ class RolesController extends Controller
         {
             if ($role->permissions()->count())
             {
-                $permissions[$role->id] = 'Granted permissions to:<br>';
+                $permissions[$role->id] = '<div class="text-left">Granted permissions to:<br>';
                 $permissions[$role->id] .= '<ul>';
                 foreach ($role->permissions()->get() as $permission)
                 {
                     $permissions[$role->id] .= '<li class="text-left">' . $permission->name . '</li>';
                 }
-                $permissions[$role->id] .= '</ul>';
+                $permissions[$role->id] .= '</ul></div>';
             }
             else
             {
@@ -127,17 +127,8 @@ class RolesController extends Controller
 
         // Update role
         $role->update($validated);
-        // revoke all permissions for updated role
-        $role->syncPermissions();
-
-        // Assign new permissions if there are some in request
-        if ($permissions)
-        {
-            foreach ($permissions as $permission)
-            {
-                $role->givePermissionTo($permission);
-            }
-        }
+        // Sync permissions for updated role
+        $role->syncPermissions($permissions);
 
         return redirect('admin/roles');
     }
