@@ -42,7 +42,7 @@
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="adminDropdown">
                                 <a class="dropdown-item" href="{{ route('admin.users.index') }}">{{ __('Users') }}</a>
                                 <a class="dropdown-item" href="{{ route('admin.roles.index') }}">{{ __('Roles') }}</a>
-                                <a class="dropdown-item" href="{{ route('admin.roles.index') }}">{{ __('Permissions') }}</a>
+                                <a class="dropdown-item" href="{{ route('admin.permissions.index') }}">{{ __('Permissions') }}</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">

@@ -18,6 +18,9 @@ Route::group(['prefix' => 'admin'], function ()
     Route::resource('roles', 'RolesController', [
         'as' => 'admin'
     ]);
+    Route::resource('permissions', 'PermissionsController', [
+        'as' => 'admin'
+    ]);
 
     Route::get('/brands', 'BrandsController@index')->name('admin.brands');
 });
