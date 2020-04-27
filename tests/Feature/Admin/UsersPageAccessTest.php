@@ -87,7 +87,7 @@ class UsersPageAccessTest extends TestCase
     }
 
     /** @test */
-    public function admin_can_access_users_list_page()
+    public function admin_can_manage_users()
     {
         $this->withoutExceptionHandling();
 
