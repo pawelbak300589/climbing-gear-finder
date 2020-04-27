@@ -6,7 +6,7 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
-                        {{ __('User') }}: {{ $role->name }}
+                        {{ __('Role') }}: {{ $role->name }}
                         <a href="{{ route('admin.roles.index') }}" class="text-danger float-right">Go back</a>
                     </div>
 
