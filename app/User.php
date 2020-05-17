@@ -62,7 +62,8 @@ class User extends Authenticatable
         }
         else
         {
-            switch ($this->getRoleNames()[0])
+            $role = $this->getRoleNames()[0] ?? 'Guest';
+            switch ($role)
             {
                 case 'SuperAdmin':
                 case 'Admin':
@@ -74,6 +75,7 @@ class User extends Authenticatable
                 case 'PremiumUser':
                     $class = 'table-success';
                     break;
+                case 'Guest':
                 default:
                     $class = 'table-danger';
             }
