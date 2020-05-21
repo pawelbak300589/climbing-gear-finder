@@ -14,6 +14,42 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/', function ()
+{
+    echo 'Welcome to our API';
+});
+
+Route::group(['prefix' => 'auth'], function ()
+{
+    Route::post('login', 'Api\AuthController@login');
+    Route::post('register', 'Api\AuthController@register');
+
+    Route::group(['middleware' => 'auth:api'], function ()
+    {
+        Route::get('logout', 'Api\AuthController@logout');
+        Route::get('user', 'Api\AuthController@user');
+    });
+});
+
+Route::group(['middleware' => 'auth:api'], function ()
+{
+    Route::group(['prefix' => 'users'], function ()
+    {
+        Route::get('/', 'Api\Admin\UsersController@index');
+        Route::post('/', 'Api\Admin\UsersController@store');
+        Route::get('/{id}', 'Api\Admin\UsersController@show');
+        Route::put('/{id}', 'Api\Admin\UsersController@update');
+        Route::patch('/{id}', 'Api\Admin\UsersController@update');
+        Route::delete('/{id}', 'Api\Admin\UsersController@destroy');
+    });
+
+    Route::group(['prefix' => 'roles'], function ()
+    {
+        Route::get('/', 'Api\Admin\RolesController@index');
+        Route::post('/', 'Api\Admin\RolesController@store');
+        Route::get('/{id}', 'Api\Admin\RolesController@show');
+        Route::put('/{id}', 'Api\Admin\RolesController@update');
+        Route::patch('/{id}', 'Api\Admin\RolesController@update');
+        Route::delete('/{id}', 'Api\Admin\RolesController@destroy');
+    });
 });
