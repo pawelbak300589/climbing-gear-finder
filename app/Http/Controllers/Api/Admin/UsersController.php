@@ -12,10 +12,10 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['permission:user-list'])->only(['index', 'show']);
-        $this->middleware(['permission:user-create'])->only('store');
-        $this->middleware(['permission:user-edit'])->only('update');
-        $this->middleware(['permission:user-delete'])->only('destroy');
+        $this->middleware(['permission:List users'])->only(['index', 'show']);
+        $this->middleware(['permission:Create users'])->only('store');
+        $this->middleware(['permission:Update users'])->only('update');
+        $this->middleware(['permission:Delete users'])->only('destroy');
     }
 
     /**

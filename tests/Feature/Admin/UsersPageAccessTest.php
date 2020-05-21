@@ -18,10 +18,10 @@ class UsersPageAccessTest extends TestCase
         parent::setUp();
 
         // Create Permissions
-        $this->app[Permission::class]->create(['name' => 'user-list']);
-        $this->app[Permission::class]->create(['name' => 'user-create']);
-        $this->app[Permission::class]->create(['name' => 'user-edit']);
-        $this->app[Permission::class]->create(['name' => 'user-delete']);
+        $this->app[Permission::class]->create(['name' => 'List users']);
+        $this->app[Permission::class]->create(['name' => 'Create users']);
+        $this->app[Permission::class]->create(['name' => 'Update users']);
+        $this->app[Permission::class]->create(['name' => 'Delete users']);
 
         // Create Roles
         $this->app[Role::class]->create(['name' => 'SuperAdmin']);
@@ -30,7 +30,7 @@ class UsersPageAccessTest extends TestCase
         $this->app[Role::class]->create(['name' => 'PremiumUser']);
 
         // Assign permissions to roles
-        $adminRole->syncPermissions(['user-list', 'user-create', 'user-edit', 'user-delete']);
+        $adminRole->syncPermissions(['List users', 'Create users', 'Update users', 'Delete users']);
     }
 
     /** @test */

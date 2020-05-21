@@ -16,26 +16,26 @@ class PermissionTableSeeder extends Seeder
         app()['cache']->forget('spatie.permission.cache');
 
         $permissions = [
-            'role-list',
-            'role-create',
-            'role-edit',
-            'role-delete',
-            'permission-list',
-            'permission-create',
-            'permission-edit',
-            'permission-delete',
-            'user-list',
-            'user-create',
-            'user-edit',
-            'user-delete',
-            'brand-list',
-            'brand-create',
-            'brand-edit',
-            'brand-delete',
-            'gear-list',
-            'gear-create',
-            'gear-edit',
-            'gear-delete'
+            'List roles',
+            'Create roles',
+            'Update roles',
+            'Delete roles',
+            'List permissions',
+            'Create permissions',
+            'Update permissions',
+            'Delete permissions',
+            'List users',
+            'Create users',
+            'Update users',
+            'Delete users',
+            'List brands',
+            'Create brands',
+            'Update brands',
+            'Delete brands',
+            'List gear',
+            'Create gear',
+            'Update gear',
+            'Delete gear'
         ];
 
         foreach ($permissions as $permission)
