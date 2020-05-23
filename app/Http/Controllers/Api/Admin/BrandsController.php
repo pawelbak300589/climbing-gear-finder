@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Services\BrandsService;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 
-class BrandsController extends Controller
+class BrandsController extends ApiController
 {
     /**
      * The service to consume the climbing equipment micro-service
@@ -31,7 +30,7 @@ class BrandsController extends Controller
     {
         $brands = $this->brandService->obtainBrands();
 
-        return response()->json($brands);
+        return $this->successResponse($brands);
     }
 
     /**
@@ -42,7 +41,7 @@ class BrandsController extends Controller
     {
         $brand = $this->brandService->obtainBrand($id);
 
-        return response()->json($brand);
+        return $this->successResponse($brand);
     }
 
     /**
@@ -51,15 +50,17 @@ class BrandsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $rules = [
             'name' => 'required|max:255',
             'url' => 'required|max:255',
             'img' => 'required|max:255'
-        ]);
+        ];
+
+        $this->validate($request, $rules);
 
         $brand = $this->brandService->createBrand($request->all());
 
-        return response()->json($brand);
+        return $this->successResponse($brand);
     }
 
     /**
@@ -69,9 +70,17 @@ class BrandsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $rules = [
+            'name' => 'required|max:255',
+            'url' => 'required|max:255',
+            'img' => 'required|max:255'
+        ];
+
+        $this->validate($request, $rules);
+
         $brand = $this->brandService->updateBrand($request->all(), $id);
 
-        return response()->json($brand);
+        return $this->successResponse($brand);
     }
 
     /**
@@ -82,7 +91,7 @@ class BrandsController extends Controller
     {
         $brand = $this->brandService->deleteBrand($id);
 
-        return response()->json($brand);
+        return $this->successResponse($brand);
     }
 
     /**
@@ -93,7 +102,7 @@ class BrandsController extends Controller
     {
         $result = $this->brandService->blacklistBrand($id);
 
-        return response()->json($result);
+        return $this->successResponse($result);
     }
 
     /**
@@ -105,6 +114,6 @@ class BrandsController extends Controller
     {
         $result = $this->brandService->convertBrandToMap($id, $parentId);
 
-        return response()->json($result);
+        return $this->successResponse($result);
     }
 }
