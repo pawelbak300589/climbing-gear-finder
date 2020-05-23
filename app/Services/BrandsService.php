@@ -53,9 +53,9 @@ class BrandsService
     /**
      * Edit a single brand data
      */
-    public function editBrand($data, $brand)
+    public function updateBrand($data, $brand)
     {
-        return $this->performRequest('PUT', "/api/brands/{$brand}", $data);
+        return $this->performRequest('PATCH', "/api/brands/{$brand}", $data);
     }
 
     /**
@@ -64,5 +64,21 @@ class BrandsService
     public function deleteBrand($brand)
     {
         return $this->performRequest('DELETE', "/api/brands/{$brand}");
+    }
+
+    /**
+     * Delete an Brand
+     */
+    public function blacklistBrand($brand)
+    {
+        return $this->performRequest('POST', "/api/brands/{$brand}/blacklist");
+    }
+
+    /**
+     * Delete an Brand
+     */
+    public function convertBrandToMap($brand, $parent)
+    {
+        return $this->performRequest('POST', "/api/brands/{$brand}/convert/map/{$parent}");
     }
 }

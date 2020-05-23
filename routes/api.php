@@ -52,4 +52,14 @@ Route::group(['middleware' => 'auth:api'], function ()
         Route::patch('/{id}', 'Api\Admin\RolesController@update');
         Route::delete('/{id}', 'Api\Admin\RolesController@destroy');
     });
+
+    Route::group(['prefix' => 'brands'], function ()
+    {
+        Route::get('/', 'Api\Admin\BrandsController@index');
+//        Route::post('/', 'Api\Admin\BrandsController@store');
+        Route::get('/{id}', 'Api\Admin\BrandsController@show');
+//        Route::put('/{id}', 'Api\Admin\BrandsController@update');
+//        Route::patch('/{id}', 'Api\Admin\BrandsController@update');
+//        Route::delete('/{id}', 'Api\Admin\BrandsController@destroy');
+    });
 });

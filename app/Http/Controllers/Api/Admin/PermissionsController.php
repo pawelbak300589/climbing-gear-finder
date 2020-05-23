@@ -75,7 +75,7 @@ class PermissionsController extends Controller
             $permission->syncRoles($request['roles']);
         }
 
-        return redirect('admin/permissions');
+        return response()->json($permission->fresh());
     }
 
     /**
