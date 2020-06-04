@@ -54,33 +54,4 @@ class User extends Authenticatable
     {
         return $this->getRoleNames();
     }
-
-    public function getTableClass()
-    {
-        if ($this->id === auth()->user()->id)
-        {
-            $class = 'table-secondary';
-        }
-        else
-        {
-            $role = $this->getRoleNames()[0] ?? 'Guest';
-            switch ($role)
-            {
-                case 'SuperAdmin':
-                case 'Admin':
-                    $class = 'table-info';
-                    break;
-                case 'NormalUser':
-                    $class = 'table-light';
-                    break;
-                case 'PremiumUser':
-                    $class = 'table-success';
-                    break;
-                case 'Guest':
-                default:
-                    $class = 'table-danger';
-            }
-        }
-        return $class;
-    }
 }

@@ -81,4 +81,12 @@ class BrandsService
     {
         return $this->performRequest('POST', "/api/brands/{$brand}/convert/map/{$parent}");
     }
+
+    /**
+     * Get Mappings By Brand Id
+     */
+    public function getMappingsByBrandId($brand)
+    {
+        return $this->performRequest('GET', "/api/brands/{$brand}/mappings");
+    }
 }

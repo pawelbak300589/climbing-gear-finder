@@ -95,10 +95,11 @@ class BrandsController extends ApiController
     }
 
     /**
+     * @param Request $request
      * @param $id
      * @return mixed
      */
-    public function blacklist($id)
+    public function blacklist(Request $request, $id)
     {
         $result = $this->brandService->blacklistBrand($id);
 
@@ -113,6 +114,17 @@ class BrandsController extends ApiController
     public function moveToMapping($id, $parentId)
     {
         $result = $this->brandService->convertBrandToMap($id, $parentId);
+
+        return $this->successResponse($result);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function mappings($id)
+    {
+        $result = $this->brandService->getMappingsByBrandId($id);
 
         return $this->successResponse($result);
     }

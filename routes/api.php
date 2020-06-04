@@ -56,10 +56,12 @@ Route::group(['middleware' => 'auth:api'], function ()
     Route::group(['prefix' => 'brands'], function ()
     {
         Route::get('/', 'Api\Admin\BrandsController@index');
-//        Route::post('/', 'Api\Admin\BrandsController@store');
+        Route::post('/', 'Api\Admin\BrandsController@store');
         Route::get('/{id}', 'Api\Admin\BrandsController@show');
-//        Route::put('/{id}', 'Api\Admin\BrandsController@update');
-//        Route::patch('/{id}', 'Api\Admin\BrandsController@update');
-//        Route::delete('/{id}', 'Api\Admin\BrandsController@destroy');
+        Route::patch('/{id}', 'Api\Admin\BrandsController@update');
+        Route::delete('/{id}', 'Api\Admin\BrandsController@destroy');
+        Route::post('/blacklist/{id}', 'Api\Admin\BrandsController@blacklist');
+        Route::post('/convert/{id}/to/{parentId}', 'Api\Admin\BrandsController@moveToMapping');
+        Route::get('/{id}/mappings', 'Api\Admin\BrandsController@mappings');
     });
 });
