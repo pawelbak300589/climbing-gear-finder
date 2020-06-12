@@ -28,14 +28,22 @@ class BrandsService
 
     /**
      * Obtain the full list of brand from the brand service
+     * @param $request
+     * @return string
      */
-    public function obtainBrands()
+    public function obtainBrands($request)
     {
-        return $this->performRequest('GET', '/api/brands');
+        $page = $request->page ?? 1;
+        $per_page = $request->per_page ?? 25;
+        $url = "/api/brands?page={$page}&per_page={$per_page}";
+
+        return $this->performRequest('GET', $url);
     }
 
     /**
      * Create Brand
+     * @param $data
+     * @return string
      */
     public function createBrand($data)
     {
@@ -44,6 +52,8 @@ class BrandsService
 
     /**
      * Get a single brand data
+     * @param $brand
+     * @return string
      */
     public function obtainBrand($brand)
     {
@@ -52,6 +62,9 @@ class BrandsService
 
     /**
      * Edit a single brand data
+     * @param $data
+     * @param $brand
+     * @return string
      */
     public function updateBrand($data, $brand)
     {
@@ -60,6 +73,8 @@ class BrandsService
 
     /**
      * Delete an Brand
+     * @param $brand
+     * @return string
      */
     public function deleteBrand($brand)
     {
@@ -67,7 +82,9 @@ class BrandsService
     }
 
     /**
-     * Delete an Brand
+     * Blacklist Brand
+     * @param $brand
+     * @return string
      */
     public function blacklistBrand($brand)
     {
@@ -75,7 +92,10 @@ class BrandsService
     }
 
     /**
-     * Delete an Brand
+     * Convert Brand to Mapping
+     * @param $brand
+     * @param $parent
+     * @return string
      */
     public function convertBrandToMap($brand, $parent)
     {
@@ -84,9 +104,45 @@ class BrandsService
 
     /**
      * Get Mappings By Brand Id
+     * @param $brandId
+     * @return string
      */
-    public function getMappingsByBrandId($brand)
+    public function getMappingsByBrandId($brandId)
     {
-        return $this->performRequest('GET', "/api/brands/{$brand}/mappings");
+        return $this->performRequest('GET', "/api/brands/{$brandId}/mappings");
+    }
+
+    /**
+     * Create Brand Mapping
+     * @param $data
+     * @param $brandId
+     * @return string
+     */
+    public function createBrandMapping($data, $brandId)
+    {
+        return $this->performRequest('POST', "/api/brands/{$brandId}/mappings", $data);
+    }
+
+    /**
+     * Update Brand Mapping
+     * @param $data
+     * @param $brandId
+     * @param $mappingId
+     * @return string
+     */
+    public function updateBrandMapping($data, $brandId, $mappingId)
+    {
+        return $this->performRequest('PATCH', "/api/brands/{$brandId}/mappings/{$mappingId}", $data);
+    }
+
+    /**
+     * Delete Brand Mapping
+     * @param $brandId
+     * @param $mappingId
+     * @return string
+     */
+    public function deleteBrandMapping($brandId, $mappingId)
+    {
+        return $this->performRequest('DELETE', "/api/brands/{$brandId}/mappings/{$mappingId}");
     }
 }

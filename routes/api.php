@@ -62,6 +62,10 @@ Route::group(['middleware' => 'auth:api'], function ()
         Route::delete('/{id}', 'Api\Admin\BrandsController@destroy');
         Route::post('/blacklist/{id}', 'Api\Admin\BrandsController@blacklist');
         Route::post('/convert/{id}/to/{parentId}', 'Api\Admin\BrandsController@moveToMapping');
-        Route::get('/{id}/mappings', 'Api\Admin\BrandsController@mappings');
+
+        Route::get('/{brandId}/mappings', 'Api\Admin\BrandMappingsController@show');
+        Route::post('/{brandId}/mappings', 'Api\Admin\BrandMappingsController@store');
+        Route::patch('/{brandId}/mappings/{mappingId}', 'Api\Admin\BrandMappingsController@update');
+        Route::delete('/{brandId}/mappings/{mappingId}', 'Api\Admin\BrandMappingsController@destroy');
     });
 });

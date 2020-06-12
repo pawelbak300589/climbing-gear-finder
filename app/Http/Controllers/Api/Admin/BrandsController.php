@@ -24,11 +24,12 @@ class BrandsController extends ApiController
     }
 
     /**
+     * @param Request $request
      * @return mixed
      */
-    public function index()
+    public function index(Request $request)
     {
-        $brands = $this->brandService->obtainBrands();
+        $brands = $this->brandService->obtainBrands($request);
 
         return $this->successResponse($brands);
     }
@@ -114,17 +115,6 @@ class BrandsController extends ApiController
     public function moveToMapping($id, $parentId)
     {
         $result = $this->brandService->convertBrandToMap($id, $parentId);
-
-        return $this->successResponse($result);
-    }
-
-    /**
-     * @param $id
-     * @return mixed
-     */
-    public function mappings($id)
-    {
-        $result = $this->brandService->getMappingsByBrandId($id);
 
         return $this->successResponse($result);
     }
