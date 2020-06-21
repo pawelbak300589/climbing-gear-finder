@@ -145,4 +145,58 @@ class BrandsService
     {
         return $this->performRequest('DELETE', "/api/brands/{$brandId}/mappings/{$mappingId}");
     }
+
+    /**
+     * Get Images By Brand Id
+     * @param $brandId
+     * @return string
+     */
+    public function getImagesByBrandId($brandId)
+    {
+        return $this->performRequest('GET', "/api/brands/{$brandId}/images");
+    }
+
+    /**
+     * Create Brand Image
+     * @param $data
+     * @param $brandId
+     * @return string
+     */
+    public function createBrandImage($data, $brandId)
+    {
+        return $this->performRequest('POST', "/api/brands/{$brandId}/images", $data);
+    }
+
+    /**
+     * Update Brand Image
+     * @param $data
+     * @param $brandId
+     * @param $imageId
+     * @return string
+     */
+    public function updateBrandImage($data, $brandId, $imageId)
+    {
+        return $this->performRequest('PATCH', "/api/brands/{$brandId}/images/{$imageId}", $data);
+    }
+
+    /**
+     * Delete Brand Image
+     * @param $brandId
+     * @param $imageId
+     * @return string
+     */
+    public function deleteBrandImage($brandId, $imageId)
+    {
+        return $this->performRequest('DELETE', "/api/brands/{$brandId}/images/{$imageId}");
+    }
+
+    /**
+     * Set image as main brand img
+     * @param $brand
+     * @return string
+     */
+    public function setAsMainImage($brandId, $imageId)
+    {
+        return $this->performRequest('POST', "/api/brands/{$brandId}/images/{$imageId}/main");
+    }
 }
