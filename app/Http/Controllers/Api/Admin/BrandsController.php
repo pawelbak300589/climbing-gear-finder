@@ -53,8 +53,7 @@ class BrandsController extends ApiController
     {
         $rules = [
             'name' => 'required|max:255',
-            'url' => 'required|max:255',
-            'img' => 'required|max:255'
+            'url' => 'required|max:255'
         ];
 
         $this->validate($request, $rules);
@@ -73,8 +72,7 @@ class BrandsController extends ApiController
     {
         $rules = [
             'name' => 'required|max:255',
-            'url' => 'required|max:255',
-            'img' => 'required|max:255'
+            'url' => 'required|max:255'
         ];
 
         $this->validate($request, $rules);
