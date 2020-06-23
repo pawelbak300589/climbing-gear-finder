@@ -52,8 +52,7 @@ class BrandsController extends ApiController
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|max:255',
-            'url' => 'required|max:255'
+            'name' => 'required|max:255'
         ];
 
         $this->validate($request, $rules);
@@ -71,8 +70,7 @@ class BrandsController extends ApiController
     public function update(Request $request, $id)
     {
         $rules = [
-            'name' => 'required|max:255',
-            'url' => 'required|max:255'
+            'name' => 'required|max:255'
         ];
 
         $this->validate($request, $rules);

@@ -3,34 +3,24 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\ApiController;
-use App\Services\BrandsService;
+use App\Services\BrandMappingsService;
 use Illuminate\Http\Request;
 
 class BrandMappingsController extends ApiController
 {
     /**
      * The service to consume the climbing equipment micro-service
-     * @var BrandsService
+     * @var BrandMappingsService
      */
-    public $brandService;
+    public $brandMappingsService;
 
     public function __construct()
     {
-        $this->brandService = new BrandsService();
-        $this->middleware(['permission:List brands'])->only(['index', 'show']);
+        $this->brandMappingsService = new BrandMappingsService();
+        $this->middleware(['permission:List brands'])->only(['show']);
         $this->middleware(['permission:Create brands'])->only('store');
         $this->middleware(['permission:Update brands'])->only(['update']);
         $this->middleware(['permission:Delete brands'])->only('destroy');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function index()
-    {
-        $brands = $this->brandService->obtainBrands();
-
-        return $this->successResponse($brands);
     }
 
     /**
@@ -39,7 +29,7 @@ class BrandMappingsController extends ApiController
      */
     public function show($brandId)
     {
-        $result = $this->brandService->getMappingsByBrandId($brandId);
+        $result = $this->brandMappingsService->getMappingsByBrandId($brandId);
 
         return $this->successResponse($result);
     }
@@ -57,7 +47,7 @@ class BrandMappingsController extends ApiController
 
         $this->validate($request, $rules);
 
-        $brandMapping = $this->brandService->createBrandMapping([
+        $brandMapping = $this->brandMappingsService->createBrandMapping([
             'brand_id' => $brandId,
             'name' => $request->name,
         ], $brandId);
@@ -80,7 +70,7 @@ class BrandMappingsController extends ApiController
 
         $this->validate($request, $rules);
 
-        $brand = $this->brandService->updateBrandMapping([
+        $brand = $this->brandMappingsService->updateBrandMapping([
             'brand_id' => $brandId,
             'name' => $request->name,
         ], $brandId, $mappingId);
@@ -95,7 +85,7 @@ class BrandMappingsController extends ApiController
      */
     public function destroy($brandId, $mappingId)
     {
-        $brand = $this->brandService->deleteBrandMapping($brandId, $mappingId);
+        $brand = $this->brandMappingsService->deleteBrandMapping($brandId, $mappingId);
 
         return $this->successResponse($brand);
     }

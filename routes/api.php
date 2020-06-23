@@ -73,5 +73,11 @@ Route::group(['middleware' => 'auth:api'], function ()
         Route::patch('/{brandId}/images/{imageId}', 'Api\Admin\BrandImagesController@update');
         Route::delete('/{brandId}/images/{imageId}', 'Api\Admin\BrandImagesController@destroy');
         Route::post('/{brandId}/images/{imageId}/main', 'Api\Admin\BrandImagesController@main');
+
+        Route::get('/{brandId}/urls', 'Api\Admin\BrandUrlsController@show');
+        Route::post('/{brandId}/urls', 'Api\Admin\BrandUrlsController@store');
+        Route::patch('/{brandId}/urls/{urlId}', 'Api\Admin\BrandUrlsController@update');
+        Route::delete('/{brandId}/urls/{urlId}', 'Api\Admin\BrandUrlsController@destroy');
+        Route::post('/{brandId}/urls/{urlId}/main', 'Api\Admin\BrandUrlsController@main');
     });
 });
