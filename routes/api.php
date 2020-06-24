@@ -53,6 +53,11 @@ Route::group(['middleware' => 'auth:api'], function ()
         Route::delete('/{id}', 'Api\Admin\RolesController@destroy');
     });
 
+    Route::group(['prefix' => 'websites'], function ()
+    {
+        Route::get('/', 'Api\Admin\WebsitesController@index');
+    });
+
     Route::group(['prefix' => 'brands'], function ()
     {
         Route::get('/', 'Api\Admin\BrandsController@index');
