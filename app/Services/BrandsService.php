@@ -35,7 +35,10 @@ class BrandsService
     {
         $page = $request->page ?? 1;
         $per_page = $request->per_page ?? 25;
-        $url = "/api/brands?page={$page}&per_page={$per_page}";
+        $search_phrase = $request->has('search_phrase') ? $request->search_phrase : '';
+        $search_exact = $request->has('search_exact') ? $request->search_exact : 0;
+        $search_exact_modified = $search_exact === 'true' ? 1 : 0;
+        $url = "/api/brands?page={$page}&per_page={$per_page}&search_phrase={$search_phrase}&search_exact={$search_exact_modified}";
 
         return $this->performRequest('GET', $url);
     }
